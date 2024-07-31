@@ -11,7 +11,7 @@
 
 | FrameWork | ![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/-Spring%20Boot-brightgreen?logo=spring&logoColor=white) ![CSS](https://img.shields.io/badge/-CSS3-blue?logo=css3&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-%238511FA.svg?style=flat&logo=bootstrap&logoColor=white) ![J Query](https://img.shields.io/badge/Jquery-23ED8B00.svg?style=flat&logo=jquery&logoColor=white) |
 | :-------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|    DB     | ![MySQL](https://img.shields.io/badge/-H2-orange?logo=mysql&logoColor=white)|
+|    DB     | ![MySQL](https://img.shields.io/badge/-MySQL-orange?logo=mysql&logoColor=white)|
 |  Tools    | ![Notion](https://img.shields.io/badge/-Notion-black?logo=notion&logoColor=white) ![Git](https://img.shields.io/badge/-Git-red?logo=git&logoColor=white) ![Slack](https://img.shields.io/badge/-Slack-purple?logo=slack&logoColor=white) 
 ---
 
