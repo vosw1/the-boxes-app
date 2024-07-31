@@ -15,6 +15,11 @@
 |  Tools    | ![Notion](https://img.shields.io/badge/-Notion-black?logo=notion&logoColor=white) ![Git](https://img.shields.io/badge/-Git-red?logo=git&logoColor=white) ![Slack](https://img.shields.io/badge/-Slack-purple?logo=slack&logoColor=white) 
 ---
 
+# Table 설계
+
+[ERDCloud를 이용한 Table 설계👆](https://www.erdcloud.com/d/ii2ubbHuCBNye8fCi)
+
+
 # UI 구조
 
 [Figma 를 이용한 UI 구조 형성👆](https://www.figma.com/design/XzO61U3bADvNJi4MAB3ePi/The-Boxes?node-id=0-1&m=dev&t=pmUhGgbVt7N8TXxR-1)
