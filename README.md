@@ -17,3 +17,4 @@
 
 
 
+[Figma]를 이용한 UI 구조 형성👆](https://www.figma.com/design/XzO61U3bADvNJi4MAB3ePi/The-Boxes?node-id=0-1&t=5tzWg7f3nzeXSH9L-0)
