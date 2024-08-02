@@ -3,7 +3,7 @@ import 'package:the_boxes/components/CustomTextFormField.dart';
 import 'package:the_boxes/page/login/components/login_button.dart';
 import 'package:the_boxes/size.dart';
 
-import 'join_button.dart';
+import 'sign_up_button.dart';
 
 class CustomForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
