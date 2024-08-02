@@ -12,13 +12,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, // 디버그 태그 제거
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white, // 기본 배경 색상을 흰색으로 설정
+        scaffoldBackgroundColor: Colors.white,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             foregroundColor: Colors.black,
@@ -30,11 +29,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: "/login", // 초기 화면
+      initialRoute: "/login",
       routes: {
         "/login": (context) => LoginPage(),
-         "/join": (context) => JoinPage(),
+        "/join": (context) => JoinPage(),
         "/home": (context) => HomePage(),
+        // "/settings": (context) => SettingsPage(), // 추가된 페이지
+        // "/info": (context) => InfoPage(), // 추가된 페이지
       },
     );
   }
