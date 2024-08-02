@@ -55,6 +55,9 @@ class LoginForm extends StatelessWidget {
                 // SessionStore store = ref.read(sessionProvider);
                 //
                 // store.login(loginReqDTO);
+
+                // 로그인 성공 후 home 페이지로 이동
+                Navigator.pushReplacementNamed(context, '/home');
               }
             },
           ),
