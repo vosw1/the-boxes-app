@@ -16,7 +16,7 @@ class Logo extends StatelessWidget {
           height: xl_gap,
           width: xl_gap,
         ),
-        SizedBox(height: sm_gap),
+        SizedBox(height: ss_gap),
         Text(
           title,
           style: TextStyle(fontSize: sl_gap, fontWeight: FontWeight.bold, color: CupertinoColors.systemBlue),
