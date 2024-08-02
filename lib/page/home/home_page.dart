@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'components/custom_app_bar.dart';
-import 'components/custom_icon_text_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
