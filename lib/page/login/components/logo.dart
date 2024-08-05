@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:the_boxes/size.dart';
+import 'package:the_boxes/_core/constants/size.dart';
 
 class Logo extends StatelessWidget {
   final String title;

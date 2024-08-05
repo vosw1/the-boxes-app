@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_boxes/size.dart'; // Ensure size.dart defines s_gap and m_gap
+import 'package:the_boxes/_core/constants/size.dart'; // Ensure size.dart defines s_gap and m_gap
 
 class CustomAuthTextFormField extends StatelessWidget {
   final String text;

@@ -7,7 +7,7 @@ import 'package:the_boxes/page/in_out_status_page/in_out_status_page.dart';
 import 'package:the_boxes/page/inventory_status_page/inventory_status_page.dart';
 import 'package:the_boxes/page/join/join_page.dart';
 import 'package:the_boxes/page/login/login_page.dart';
-import 'package:the_boxes/size.dart';
+import 'package:the_boxes/_core/constants/size.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

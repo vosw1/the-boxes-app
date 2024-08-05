@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  dio: ^5.5.0+1
+  logger: ^2.4.0
   intl: ^0.18.0
   flutter_native_splash: ^2.0.5
   lottie: ^2.2.0

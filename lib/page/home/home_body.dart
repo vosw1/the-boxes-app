@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_boxes/size.dart';
+import 'package:the_boxes/_core/constants/size.dart';
 import 'components/custom_icon_text_button.dart';
 
 class HomeBody extends StatelessWidget {
