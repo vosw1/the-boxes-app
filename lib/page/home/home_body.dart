@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_boxes/size.dart';
-import 'custom_icon_text_button.dart';
+import 'components/custom_icon_text_button.dart';
 
 class HomeBody extends StatelessWidget {
   @override
@@ -23,6 +23,11 @@ class HomeBody extends StatelessWidget {
             routeName: '/inout_instruction_page',
           ),
           CustomIconTextButton(
+            icon: Icons.category,
+            text: '품목',
+            routeName: '/inout_location_page',
+          ),
+          CustomIconTextButton(
             icon: Icons.location_on,
             text: '입출고처',
             routeName: '/inout_location_page',
@@ -36,11 +41,6 @@ class HomeBody extends StatelessWidget {
             icon: Icons.assessment,
             text: '입출고 현황',
             routeName: '/inout_status_page',
-          ),
-          CustomIconTextButton(
-            icon: Icons.settings,
-            text: '설정',
-            routeName: '/setting_page',
           ),
         ],
       ),
