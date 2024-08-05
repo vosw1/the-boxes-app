@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:the_boxes/page/home/home_page.dart';
-import 'package:the_boxes/page/home/pages/in_out_industruction_page/in_out_industruction_page.dart';
-import 'package:the_boxes/page/home/pages/in_out_location_page/in_out_location.dart';
-import 'package:the_boxes/page/home/pages/in_out_page/in_out_page.dart';
-import 'package:the_boxes/page/home/pages/in_out_status_page/in_out_status_page.dart';
-import 'package:the_boxes/page/home/pages/inventory_status_page/inventory_status_page.dart';
+import 'package:the_boxes/page/in_out_industruction_page/in_out_industruction_page.dart';
+import 'package:the_boxes/page/in_out_location_page/in_out_location.dart';
+import 'package:the_boxes/page/in_out_page/in_out_page.dart';
+import 'package:the_boxes/page/in_out_status_page/in_out_status_page.dart';
+import 'package:the_boxes/page/inventory_status_page/inventory_status_page.dart';
 import 'package:the_boxes/page/join/join_page.dart';
 import 'package:the_boxes/page/login/login_page.dart';
 import 'package:the_boxes/size.dart';

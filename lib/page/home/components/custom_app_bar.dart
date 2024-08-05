@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_boxes/page/setting/setting_page.dart';
 import 'package:the_boxes/size.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -22,7 +23,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: Icon(Icons.settings),
           onPressed: () {
-            // Add settings action
+            // Navigate to SettingPage
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingPage()),
+            );
           },
         ),
       ],
