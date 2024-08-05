@@ -43,6 +43,7 @@ class UserRepository {
         print('데이터 확인 : ${responseDTO.body}');
       }
       final accessToken = response.headers["Authorization"]!.first;
+      print('로그인 성공');
       return (responseDTO, accessToken);
     } else {
       return (responseDTO, "");

@@ -8,27 +8,32 @@ import 'package:the_boxes/data/model/user.dart';
 import 'package:the_boxes/data/repository/user_repository.dart';
 import 'package:the_boxes/main.dart';
 
-
 class SessionUser {
   User? user;
   String? accessToken;
   bool isLogin = false;
   bool isJoin = false;
   int? selectedPostId;
+
   SessionUser();
 }
+
 // 창고
 class SessionStore extends SessionUser {
   final mContext = navigatorKey.currentContext;
+
   SessionStore();
+
   // 로그아웃
   Future<void> logout() async {
     super.user = null;
     super.accessToken = null;
     super.isLogin = false;
     await secureStorage.delete(key: "accessToken");
-    navigatorKey.currentState?.pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+    navigatorKey.currentState
+        ?.pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
   }
+
   void loginCheck(String path) {
     if (isLogin) {
       Navigator.pushNamed(mContext!, path);
@@ -36,6 +41,7 @@ class SessionStore extends SessionUser {
       Navigator.pushNamed(mContext!, Move.loginPage);
     }
   }
+
   void joinCheck(String path) {
     if (isJoin) {
       Navigator.pushNamed(mContext!, path);
@@ -43,6 +49,7 @@ class SessionStore extends SessionUser {
       Navigator.pushNamed(mContext!, Move.joinPage);
     }
   }
+
   Future<void> join(JoinReqDTO joinReqDTO) async {
     ResponseDTO responseDTO = await UserRepository().fetchJoin(joinReqDTO);
 
@@ -58,18 +65,36 @@ class SessionStore extends SessionUser {
   }
 
   Future<void> login(LoginReqDTO loginReqDTO) async {
-    var (responseDTO, accessToken) = await UserRepository().fetchLogin(loginReqDTO);
+    var (responseDTO, accessToken) =
+        await UserRepository().fetchLogin(loginReqDTO);
 
     if (responseDTO.status == 200) {
-      await secureStorage.write(key: "accessToken", value: accessToken);
-      this.user = responseDTO.body;
+      if (secureStorage != null) {
+        await secureStorage.write(key: "accessToken", value: accessToken);
+      } else {
+        print('Secure storage is null');
+      }
+
+      if (responseDTO.body != null) {
+        this.user = responseDTO.body;
+      } else {
+        print('Response body is null');
+      }
+
       this.accessToken = accessToken;
       this.isLogin = true;
-    } else {
-      _showErrorDialog("로그인 실패",'${responseDTO.errorMessage}');
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final context = navigatorKey.currentContext;
+        if (context != null) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              '/home', (Route<dynamic> route) => false);
+        } else {
+          print('Navigator context is null');
+        }
+      });
     }
   }
-
 
   void _showErrorDialog(String title, String message) {
     showDialog(
@@ -80,7 +105,8 @@ class SessionStore extends SessionUser {
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: Center(child: Text("확인", style: TextStyle(color: Colors.redAccent))),
+              child: Center(
+                  child: Text("확인", style: TextStyle(color: Colors.redAccent))),
               onPressed: () {
                 Navigator.of(context).pop();
               },

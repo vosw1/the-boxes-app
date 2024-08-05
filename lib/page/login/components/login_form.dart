@@ -56,11 +56,21 @@ class LoginForm extends ConsumerWidget {
 
                 // 로그인 메서드 호출
                 final sessionStore = ref.read(sessionProvider);
-                await sessionStore.login(loginReqDTO);
+                bool loginSuccessful = sessionStore.login(loginReqDTO) as bool;
 
+                if (loginSuccessful) {
+                  // 로그인 성공 시 Home 페이지로 이동
+                  Navigator.of(context).pushReplacementNamed('/home'); // Navigate to HomePage
+                } else {
+                  // 로그인 실패 시 에러 메시지 표시
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('로그인 실패. 다시 시도해 주세요.')),
+                  );
+                }
               }
             },
           ),
+
         ],
       ),
     );
