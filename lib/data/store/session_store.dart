@@ -1,13 +1,14 @@
-// 창고 데이터
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:the_boxes/_core/constants/move.dart';
 import 'package:the_boxes/_core/constants/dio.dart';
+import 'package:the_boxes/_core/constants/move.dart';
 import 'package:the_boxes/data/dto/join_req_dto.dart';
 import 'package:the_boxes/data/dto/res_dto.dart';
-import 'package:the_boxes/data/model/user.dart';
 import 'package:the_boxes/data/repository/user_repository.dart';
 import 'package:the_boxes/main.dart';
+
+import '../model/user.dart';
+
 class SessionUser {
   User? user;
   String? accessToken;
@@ -16,11 +17,10 @@ class SessionUser {
   int? selectedPostId;
   SessionUser();
 }
-// 창고
+
 class SessionStore extends SessionUser {
   final mContext = navigatorKey.currentContext;
   SessionStore();
-
   // 로그아웃
   Future<void> logout() async {
     super.user = null;
@@ -50,10 +50,10 @@ class SessionStore extends SessionUser {
     ResponseDTO responseDTO = await UserRepository().fetchJoin(joinReqDTO);
 
     if (responseDTO.status == 200) {
-      this.user = User.fromJson(responseDTO.data); // 수정된 부분
+      this.user = User.fromJson(responseDTO.body);
       this.isJoin = true;
       this.isLogin = true;
-      this.accessToken = responseDTO.token; // 수정된 부분
+      this.accessToken = responseDTO.body["accessToken"];
       await secureStorage.write(key: "accessToken", value: this.accessToken);
     } else {
       _showErrorDialog("회원가입 실패", '${responseDTO.errorMessage}');
@@ -61,15 +61,21 @@ class SessionStore extends SessionUser {
   }
 
   Future<void> login(LoginReqDTO loginReqDTO) async {
-    ResponseDTO responseDTO = (await UserRepository().fetchLogin(loginReqDTO)) as ResponseDTO;
+    try {
+      final loginResponse = await UserRepository().fetchLogin(loginReqDTO);
+      final responseDTO = loginResponse['responseDTO'] as ResponseDTO;
+      final accessToken = loginResponse['accessToken'] as String;
 
-    if (responseDTO.status == 200) {
-      this.user = User.fromJson(responseDTO.data); // 수정된 부분
-      this.accessToken = responseDTO.token; // 수정된 부분
-      this.isLogin = true;
-      await secureStorage.write(key: "accessToken", value: this.accessToken);
-    } else {
-      _showErrorDialog("로그인 실패", '${responseDTO.errorMessage}');
+      if (responseDTO.status == 200) {
+        await secureStorage.write(key: "accessToken", value: accessToken);
+        this.user = User.fromJson(responseDTO.body);
+        this.accessToken = accessToken;
+        this.isLogin = true;
+      } else {
+        _showErrorDialog("로그인 실패", '${responseDTO.errorMessage}');
+      }
+    } catch (e) {
+      _showErrorDialog("로그인 오류", '예상치 못한 오류가 발생했습니다: $e');
     }
   }
 

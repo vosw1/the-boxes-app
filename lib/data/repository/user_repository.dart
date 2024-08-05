@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:the_boxes/_core/constants/dio.dart';
 import 'package:the_boxes/data/dto/join_req_dto.dart';
 import 'package:the_boxes/data/dto/res_dto.dart';
-import 'package:the_boxes/data/model/user.dart';
 
 class UserRepository {
   Future<ResponseDTO> fetchJoin(JoinReqDTO requestDTO) async {
@@ -21,14 +19,8 @@ class UserRepository {
   Future<Map<String, dynamic>> fetchLogin(LoginReqDTO loginReqDTO) async {
     try {
       final response = await dio.post("/login", data: loginReqDTO.toJson());
-
       final responseDTO = ResponseDTO.fromJson(response.data);
-
-      if (responseDTO.success) {
-        if (responseDTO.data is Map<String, dynamic>) {
-          responseDTO.data = User.fromJson(responseDTO.data);
-        }
-
+      if (responseDTO.status == 200) {
         final accessToken = response.headers["Authorization"]?.first ?? '';
         return {
           'responseDTO': responseDTO,

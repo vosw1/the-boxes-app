@@ -1,32 +1,41 @@
 class ResponseDTO {
-  bool success;
-  int status;
+  int? status;
   String? errorMessage;
-  dynamic data;
-  String? token; // 추가된 token 속성
+  dynamic body;
+  String? token;
 
   ResponseDTO({
-    required this.success,
-    required this.status,
+    this.status,
     this.errorMessage,
-    this.data,
-    this.token, // 생성자에도 추가
+    this.body,
+    this.token,
   });
 
+  @override
+  String toString() {
+    return 'ResponseDTO(status: $status, message: $errorMessage, body: $body, token: $token)';
+  }
+
   ResponseDTO.fromJson(Map<String, dynamic> json)
-      : success = json["success"],
-        status = json["status"],
-        errorMessage = json["errorMessage"],
-        data = json["data"], // initialize _data from json
-        token = json['token']; // JSON에서 토큰을 가져와서 할당
+      : status = json['status'] as int?,
+        errorMessage = json['errorMessage'] as String?,
+        body = _parseListData(json['body']),
+        token = json['token'];
+
+  static dynamic _parseListData(dynamic data) {
+    if (data is List) {
+      return data.map((item) => Map<String, dynamic>.from(item)).toList();
+    } else {
+      return data;
+    }
+  }
 
   Map<String, dynamic> toJson() {
     return {
-      "success": success,
-      "status": status,
-      "errorMessage": errorMessage,
-      "data": data, // include data in json serialization
-      "token": token, // include token in json serialization
+      'status': status,
+      'errorMessage': errorMessage,
+      'body': body,
+      'token': token,
     };
   }
 }
