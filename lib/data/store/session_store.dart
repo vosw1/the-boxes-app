@@ -17,7 +17,7 @@ class SessionUser {
   int? selectedPostId;
   SessionUser();
 }
-
+// 창고
 class SessionStore extends SessionUser {
   final mContext = navigatorKey.currentContext;
   SessionStore();
@@ -29,7 +29,6 @@ class SessionStore extends SessionUser {
     await secureStorage.delete(key: "accessToken");
     navigatorKey.currentState?.pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
   }
-
   void loginCheck(String path) {
     if (isLogin) {
       Navigator.pushNamed(mContext!, path);
@@ -37,7 +36,6 @@ class SessionStore extends SessionUser {
       Navigator.pushNamed(mContext!, Move.loginPage);
     }
   }
-
   void joinCheck(String path) {
     if (isJoin) {
       Navigator.pushNamed(mContext!, path);
@@ -45,7 +43,6 @@ class SessionStore extends SessionUser {
       Navigator.pushNamed(mContext!, Move.joinPage);
     }
   }
-
   Future<void> join(JoinReqDTO joinReqDTO) async {
     ResponseDTO responseDTO = await UserRepository().fetchJoin(joinReqDTO);
 
@@ -61,23 +58,18 @@ class SessionStore extends SessionUser {
   }
 
   Future<void> login(LoginReqDTO loginReqDTO) async {
-    try {
-      final loginResponse = await UserRepository().fetchLogin(loginReqDTO);
-      final responseDTO = loginResponse['responseDTO'] as ResponseDTO;
-      final accessToken = loginResponse['accessToken'] as String;
+    var (responseDTO, accessToken) = await UserRepository().fetchLogin(loginReqDTO);
 
-      if (responseDTO.status == 200) {
-        await secureStorage.write(key: "accessToken", value: accessToken);
-        this.user = User.fromJson(responseDTO.body);
-        this.accessToken = accessToken;
-        this.isLogin = true;
-      } else {
-        _showErrorDialog("로그인 실패", '${responseDTO.errorMessage}');
-      }
-    } catch (e) {
-      _showErrorDialog("로그인 오류", '예상치 못한 오류가 발생했습니다: $e');
+    if (responseDTO.status == 200) {
+      await secureStorage.write(key: "accessToken", value: accessToken);
+      this.user = responseDTO.body;
+      this.accessToken = accessToken;
+      this.isLogin = true;
+    } else {
+      _showErrorDialog("로그인 실패",'${responseDTO.errorMessage}');
     }
   }
+
 
   void _showErrorDialog(String title, String message) {
     showDialog(

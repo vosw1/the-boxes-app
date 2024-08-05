@@ -20,13 +20,17 @@ class LoginReqDTO {
   final String username;
   final String password;
 
-  LoginReqDTO({
+  LoginReqDTO({required this.username, required this.password});
+
+  Map<String, dynamic> toJson() => {"email": username, "password": password};
+}
+
+class DuplimentEmailCheckDTO {
+  final String username;
+
+  DuplimentEmailCheckDTO({
     required this.username,
-    required this.password
   });
 
-  Map<String, dynamic> toJson() => {
-    "username": username,
-    "password": password
-  };
+  Map<String, dynamic> toJson() => {"username": username};
 }

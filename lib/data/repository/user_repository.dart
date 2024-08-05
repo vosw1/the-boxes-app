@@ -1,41 +1,51 @@
+import 'package:logger/logger.dart';
 import 'package:the_boxes/_core/constants/dio.dart';
 import 'package:the_boxes/data/dto/join_req_dto.dart';
 import 'package:the_boxes/data/dto/res_dto.dart';
+import 'package:the_boxes/data/model/user.dart';
 
 class UserRepository {
-  Future<ResponseDTO> fetchJoin(JoinReqDTO requestDTO) async {
-    try {
-      // 통신 시작
-      final response = await dio.post("/join", data: requestDTO.toJson());
-      // DTO 파싱하기
-      return ResponseDTO.fromJson(response.data);
-    } catch (e) {
-      // 네트워크 오류 등 예외 처리
-      print('회원가입 요청 중 오류 발생: $e');
-      throw Exception('회원가입 요청 실패');
-    }
+
+  Future<ResponseDTO> fetchEmailSameCheck(DuplimentEmailCheckDTO requestDTO) async {
+    final response = await dio.get(
+      "/users/username-same-check",
+      queryParameters: requestDTO.toJson(),
+    );
+
+    print('데이터 확인 : ${requestDTO.toJson()}');
+    ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
+    print('데이터 확인 : ${responseDTO.body}');
+
+    return responseDTO;
   }
 
-  Future<Map<String, dynamic>> fetchLogin(LoginReqDTO loginReqDTO) async {
-    try {
-      final response = await dio.post("/login", data: loginReqDTO.toJson());
-      final responseDTO = ResponseDTO.fromJson(response.data);
-      if (responseDTO.status == 200) {
-        final accessToken = response.headers["Authorization"]?.first ?? '';
-        return {
-          'responseDTO': responseDTO,
-          'accessToken': accessToken,
-        };
-      } else {
-        return {
-          'responseDTO': responseDTO,
-          'accessToken': '',
-        };
+  Future<ResponseDTO> fetchJoin(JoinReqDTO requestDTO) async {
+    // 통신 시작
+    final response = await dio.post("/users/join", data: requestDTO.toJson());
+    Logger().d(response.data!);
+
+    print('데이터 확인 : ${requestDTO.toJson()}');
+    // DTO 파싱하기
+    ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
+    print('데이터 확인 : ${ResponseDTO.fromJson(response.data)}');
+    return responseDTO;
+  }
+
+  Future<(ResponseDTO, String)> fetchLogin(LoginReqDTO loginReqDTO) async {
+    final response = await dio.post("/users/login", data: loginReqDTO.toJson());
+    Logger().d(response.data!);
+    ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
+    print('데이터 확인 : ${loginReqDTO.toJson()}');
+    if (responseDTO.status == 200) {
+      // response가 User 객체인지 확인 후 변환
+      if (responseDTO.body is Map<String, dynamic>) {
+        responseDTO.body = User.fromJson(responseDTO.body);
+        print('데이터 확인 : ${responseDTO.body}');
       }
-    } catch (e) {
-      // 네트워크 오류 등 예외 처리
-      print('로그인 요청 중 오류 발생: $e');
-      throw Exception('로그인 요청 실패');
+      final accessToken = response.headers["Authorization"]!.first;
+      return (responseDTO, accessToken);
+    } else {
+      return (responseDTO, "");
     }
   }
 }

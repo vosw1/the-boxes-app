@@ -2,25 +2,22 @@ class ResponseDTO {
   int? status;
   String? errorMessage;
   dynamic body;
-  String? token;
 
   ResponseDTO({
     this.status,
     this.errorMessage,
     this.body,
-    this.token,
   });
 
   @override
   String toString() {
-    return 'ResponseDTO(status: $status, message: $errorMessage, body: $body, token: $token)';
+    return 'ResponseDTO(status: $status, message: $errorMessage, body: $body)';
   }
 
   ResponseDTO.fromJson(Map<String, dynamic> json)
       : status = json['status'] as int?,
         errorMessage = json['errorMessage'] as String?,
-        body = _parseListData(json['body']),
-        token = json['token'];
+        body = _parseListData(json['body']);
 
   static dynamic _parseListData(dynamic data) {
     if (data is List) {
@@ -35,7 +32,6 @@ class ResponseDTO {
       'status': status,
       'errorMessage': errorMessage,
       'body': body,
-      'token': token,
     };
   }
 }

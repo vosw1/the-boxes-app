@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 class User {
   final int id;
   final String username;
+  final String password;
   final String email;
   final String imgUrl;
   final DateTime? createdAt;
@@ -10,6 +11,7 @@ class User {
   User({
     required this.id,
     required this.username,
+    required this.password,
     required this.email,
     required this.imgUrl,
     required this.createdAt,
@@ -19,6 +21,7 @@ class User {
   Map<String, dynamic> toJson() => {
     "id" : id,
     "username" : username,
+    'password': password,
     "email" : email,
     "createdAt" : createdAt
   };
@@ -27,6 +30,7 @@ class User {
   User.fromJson(Map<String, dynamic> json)
       : id = json["id"],
         username = json["username"] ?? "",
+        password = json["password"] ?? "",
         email = json["email"] ?? "",
         imgUrl = json["imgUrl"] ?? "",
         createdAt = json["created"] != null
