@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_boxes/size.dart';
 
 class CustomIconTextButton extends StatelessWidget {
   final IconData icon;
@@ -21,9 +22,9 @@ class CustomIconTextButton extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 40.0), // 아이콘 크기 조정 가능
-          const SizedBox(height: 8.0),
-          Text(text, style: const TextStyle(fontSize: 16.0)), // 텍스트 스타일 조정 가능
+          Icon(icon, size: sl_gap, color: Colors.blueGrey,), // 아이콘 크기 조정 가능
+          const SizedBox(height: s_gap),
+          Text(text, style: const TextStyle(fontSize: m_gap)), // 텍스트 스타일 조정 가능
         ],
       ),
     );

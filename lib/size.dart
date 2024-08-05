@@ -1,6 +1,6 @@
 const double ss_gap = 5.0;
 const double s_gap = 10.0;
-const double sm_gap = 15.0;
+const double sm_gap = 16.0;
 const double m_gap = 20.0;
 const double ml_gap = 30.0;
 const double sl_gap = 40.0;
