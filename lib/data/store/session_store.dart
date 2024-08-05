@@ -4,10 +4,10 @@ import 'package:the_boxes/_core/constants/dio.dart';
 import 'package:the_boxes/_core/constants/move.dart';
 import 'package:the_boxes/data/dto/join_req_dto.dart';
 import 'package:the_boxes/data/dto/res_dto.dart';
+import 'package:the_boxes/data/model/user.dart';
 import 'package:the_boxes/data/repository/user_repository.dart';
 import 'package:the_boxes/main.dart';
 
-import '../model/user.dart';
 
 class SessionUser {
   User? user;

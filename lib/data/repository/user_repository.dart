@@ -6,7 +6,7 @@ import 'package:the_boxes/data/model/user.dart';
 
 class UserRepository {
 
-  Future<ResponseDTO> fetchEmailSameCheck(DuplimentEmailCheckDTO requestDTO) async {
+  Future<ResponseDTO> fetchUsernameSameCheck(DuplimentEmailCheckDTO requestDTO) async {
     final response = await dio.get(
       "/users/username-same-check",
       queryParameters: requestDTO.toJson(),
@@ -21,7 +21,7 @@ class UserRepository {
 
   Future<ResponseDTO> fetchJoin(JoinReqDTO requestDTO) async {
     // 통신 시작
-    final response = await dio.post("/users/join", data: requestDTO.toJson());
+    final response = await dio.post("/join", data: requestDTO.toJson());
     Logger().d(response.data!);
 
     print('데이터 확인 : ${requestDTO.toJson()}');
@@ -32,7 +32,7 @@ class UserRepository {
   }
 
   Future<(ResponseDTO, String)> fetchLogin(LoginReqDTO loginReqDTO) async {
-    final response = await dio.post("/users/login", data: loginReqDTO.toJson());
+    final response = await dio.post("/login", data: loginReqDTO.toJson());
     Logger().d(response.data!);
     ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
     print('데이터 확인 : ${loginReqDTO.toJson()}');

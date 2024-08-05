@@ -22,7 +22,7 @@ class LoginReqDTO {
 
   LoginReqDTO({required this.username, required this.password});
 
-  Map<String, dynamic> toJson() => {"email": username, "password": password};
+  Map<String, dynamic> toJson() => {"username": username, "password": password};
 }
 
 class DuplimentEmailCheckDTO {
