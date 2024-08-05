@@ -47,15 +47,6 @@ class LoginForm extends StatelessWidget {
                 String username = _username.text.trim();
                 String password = _password.text.trim();
 
-                // 로그인 처리 로직을 여기에 추가
-                // 예를 들어:
-                // LoginReqDTO loginReqDTO = LoginReqDTO(
-                //     username: username, password: password);
-                //
-                // SessionStore store = ref.read(sessionProvider);
-                //
-                // store.login(loginReqDTO);
-
                 // 로그인 성공 후 home 페이지로 이동
                 Navigator.pushReplacementNamed(context, '/home');
               }
