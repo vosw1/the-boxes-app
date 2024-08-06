@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:the_boxes/components/custom_auth_text_form_field.dart';
@@ -5,6 +7,7 @@ import 'package:the_boxes/components/custom_elavated_button.dart';
 import 'package:the_boxes/_core/util/validation_utils.dart';
 import 'package:the_boxes/_core/constants/size.dart';
 import 'package:the_boxes/data/dto/join_req_dto.dart';
+import 'package:the_boxes/data/dto/res_dto.dart';
 import 'package:the_boxes/data/store/session_store.dart';
 
 class LoginForm extends ConsumerWidget {
@@ -56,9 +59,10 @@ class LoginForm extends ConsumerWidget {
 
                 // 로그인 메서드 호출
                 final sessionStore = ref.read(sessionProvider);
-                bool loginSuccessful = sessionStore.login(loginReqDTO) as bool;
+                await sessionStore.login(loginReqDTO);
 
-                if (loginSuccessful) {
+                if (sessionStore.isLogin) {
+                  print('login form 로그인 성공');
                   // 로그인 성공 시 Home 페이지로 이동
                   Navigator.of(context).pushReplacementNamed('/home'); // Navigate to HomePage
                 } else {

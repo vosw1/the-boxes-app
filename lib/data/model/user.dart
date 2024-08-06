@@ -1,11 +1,15 @@
 class User {
   final int id;
   final String username;
+  final String email;
+  final String phone;
   final DateTime? createdAt;
 
   User({
     required this.id,
     required this.username,
+    required this.email,
+    required this.phone,
     required this.createdAt,
   });
 
@@ -13,6 +17,8 @@ class User {
   Map<String, dynamic> toJson() => {
     "id": id,
     "username": username,
+    "email": email,
+    "phone": phone,
     "createdAt": createdAt?.toIso8601String(),  // DateTime을 ISO 8601 문자열로 변환
   };
 
@@ -21,6 +27,8 @@ class User {
     return User(
       id: json["id"] as int,
       username: json["username"] as String? ?? "",
+      email: json["email"] as String? ?? "",
+      phone: json["phone"] as String? ?? "",
       createdAt: json["createdAt"] != null
           ? DateTime.tryParse(json["createdAt"])  // DateTime 변환 시 null 처리
           : null,
