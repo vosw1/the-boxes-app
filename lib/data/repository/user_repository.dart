@@ -8,7 +8,7 @@ class UserRepository {
 
   Future<ResponseDTO> fetchUsernameSameCheck(DuplimentEmailCheckDTO requestDTO) async {
     final response = await dio.get(
-      "/users/username-same-check",
+      "/username-same-check",
       queryParameters: requestDTO.toJson(),
     );
 

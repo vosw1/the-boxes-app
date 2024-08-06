@@ -7,7 +7,6 @@ import 'package:the_boxes/components/custom_elavated_button.dart';
 import 'package:the_boxes/_core/util/validation_utils.dart';
 import 'package:the_boxes/_core/constants/size.dart';
 import 'package:the_boxes/data/dto/join_req_dto.dart';
-import 'package:the_boxes/data/dto/res_dto.dart';
 import 'package:the_boxes/data/store/session_store.dart';
 
 class LoginForm extends ConsumerWidget {
