@@ -3,12 +3,12 @@ import 'package:the_boxes/_core/constants/size.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final String text;
-  final VoidCallback funPageRoute;
+  final VoidCallback? funPageRoute;
 
   const CustomElevatedButton({
     Key? key,
     required this.text,
-    required this.funPageRoute,
+    this.funPageRoute,
   }) : super(key: key);
 
   @override

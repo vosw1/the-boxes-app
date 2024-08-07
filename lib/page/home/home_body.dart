@@ -6,7 +6,7 @@ class HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(sm_gap),
       child: GridView.count(
         crossAxisCount: 3, // Display 3 items per row
         crossAxisSpacing: sm_gap, // Horizontal space between items
