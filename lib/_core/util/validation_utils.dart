@@ -107,11 +107,10 @@ class ValidationUtils {
     }
     try {
       final date = DateFormat('yyyy-MM-dd').parseStrict(value);
-      final now = DateTime.now(); //   intl: ^0.18.0 라이브러리 추가
+      final now = DateTime.now();
       if (date.isAfter(now)) {
         return 'Birthdate cannot be in the future';
       }
-      // Optional: Check if the date makes the user at least 18 years old
       final eighteenYearsAgo = now.subtract(Duration(days: 18 * 365));
       if (date.isAfter(eighteenYearsAgo)) {
         return 'You must be at least 18 years old';
