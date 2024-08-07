@@ -32,31 +32,69 @@ class _JoinFormState extends ConsumerState<JoinForm> {
   bool _isUsernameAvailable = false;
   String? _usernameError;
   final UserRepository _userRepository = UserRepository();
+  Timer? _debounce;
 
   @override
   void initState() {
     super.initState();
-    _username.addListener(_checkUsername);
+    _username.addListener(_onUsernameChanged);
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _username.dispose();
+    _password.dispose();
+    _name.dispose();
+    _birthdate.dispose();
+    _phone.dispose();
+    _address.dispose();
+    _email.dispose();
+    _companyAddress.dispose();
+    _industry.dispose();
+    _position.dispose();
+    _logisticsCenterLocation.dispose();
+    _equipment.dispose();
+    super.dispose();
+  }
+
+  void _onUsernameChanged() {
+    if (_debounce?.isActive ?? true) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      _checkUsername();
+    });
   }
 
   Future<void> _checkUsername() async {
     if (_username.text.isEmpty) {
       setState(() {
         _usernameError = null;
+        _isUsernameAvailable = true; // 사용 가능 상태로 설정
       });
       return;
     }
 
     final requestDTO = DuplimentEmailCheckDTO(username: _username.text.trim());
-    final responseDTO = await _userRepository.fetchUsernameSameCheck(
-        requestDTO);
+    try {
+      final responseDTO = await _userRepository.fetchUsernameSameCheck(requestDTO);
 
-    setState(() {
-      _isUsernameAvailable = responseDTO.body;
-      _usernameError =
-      _isUsernameAvailable ? null : 'Username is already taken';
-    });
+      // 서버 응답의 `body`가 `false`일 때 유저네임 사용 가능
+      final bool isAvailable = responseDTO.body == false; // 서버 응답이 `false`일 때만 사용 가능으로 간주
+
+      setState(() {
+        _isUsernameAvailable = isAvailable;
+        _usernameError = _isUsernameAvailable ? null : 'Username is already taken';
+      });
+    } catch (e) {
+      // 예외 처리 및 에러 메시지 설정
+      print('유저네임 중복 체크 오류: $e');
+      setState(() {
+        _usernameError = '서버 오류: 유저네임 중복 체크 실패';
+      });
+    }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -167,8 +205,7 @@ class _JoinFormState extends ConsumerState<JoinForm> {
                 String companyAddress = _companyAddress.text.trim();
                 String industry = _industry.text.trim();
                 String position = _position.text.trim();
-                String logisticsCenterLocation = _logisticsCenterLocation.text
-                    .trim();
+                String logisticsCenterLocation = _logisticsCenterLocation.text.trim();
                 String equipment = _equipment.text.trim();
 
                 // 가입 요청 로직 추가

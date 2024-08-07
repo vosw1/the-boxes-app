@@ -7,16 +7,32 @@ import 'package:the_boxes/data/model/user.dart';
 class UserRepository {
 
   Future<ResponseDTO> fetchUsernameSameCheck(DuplimentEmailCheckDTO requestDTO) async {
-    final response = await dio.get(
-      "/username-same-check",
-      queryParameters: requestDTO.toJson(),
-    );
+    try {
+      final response = await dio.get(
+        "/username-same-check",
+        queryParameters: requestDTO.toJson(),
+      );
 
-    print('데이터 확인 : ${requestDTO.toJson()}');
-    ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
-    print('데이터 확인 : ${responseDTO.body}');
+      // 디버깅을 위한 로그 출력
+      print('데이터 확인 : ${requestDTO.toJson()}');
+      print('서버 응답 : ${response.data}');
 
-    return responseDTO;
+      if (response.data == false) {
+        throw Exception('중복된 아이디입니다');
+      }
+
+      ResponseDTO responseDTO = ResponseDTO.fromJson(response.data);
+
+      // 디버깅을 위한 로그 출력
+      print('데이터 확인 : ${responseDTO.body}');
+
+      return responseDTO;
+    } catch (e) {
+      // 예외를 잡아내고 적절한 에러 처리를 합니다.
+      print('유저네임 중복 체크 오류: $e');
+      // 필요에 따라 다른 처리를 추가할 수 있습니다.
+      throw Exception('유저네임 중복 체크 실패');
+    }
   }
 
   Future<ResponseDTO> fetchJoin(JoinReqDTO requestDTO) async {
