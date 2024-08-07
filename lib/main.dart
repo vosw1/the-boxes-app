@@ -6,6 +6,7 @@ import 'package:the_boxes/page/in_out_location_page/in_out_location.dart';
 import 'package:the_boxes/page/in_out_page/in_out_page.dart';
 import 'package:the_boxes/page/in_out_status_page/in_out_status_page.dart';
 import 'package:the_boxes/page/inventory_status_page/inventory_status_page.dart';
+import 'package:the_boxes/page/item/item_page.dart';
 import 'package:the_boxes/page/join/join_page.dart';
 import 'package:the_boxes/page/login/login_page.dart';
 import 'package:the_boxes/_core/constants/size.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         "/login": (context) => LoginPage(),
         "/join": (context) => JoinPage(),
         "/home": (context) => HomePage(),
+        "/item": (context) => ItemPage(),
         "/inout_page": (context) => InOutPage(),
         "/inout_instruction_page": (context) => InOutInstructionPage(),
         "/inout_location_page": (context) => InOutLocationPage(),

@@ -15,32 +15,32 @@ class HomeBody extends StatelessWidget {
           CustomIconTextButton(
             icon: Icons.move_to_inbox,
             text: '입출고',
-            routeName: '/inout_page',
+            routeName: '/inout',
           ),
           CustomIconTextButton(
             icon: Icons.assignment,
             text: '입출고 지시',
-            routeName: '/inout_instruction_page',
+            routeName: '/inout_instruction',
           ),
           CustomIconTextButton(
             icon: Icons.assignment,
             text: '품목',
-            routeName: '/item_page',
+            routeName: '/item',
           ),
           CustomIconTextButton(
             icon: Icons.location_on,
             text: '입출고처',
-            routeName: '/inout_location_page',
+            routeName: '/inout_location',
           ),
           CustomIconTextButton(
             icon: Icons.inventory,
             text: '재고현황',
-            routeName: '/inventory_status_page',
+            routeName: '/inventory_status',
           ),
           CustomIconTextButton(
             icon: Icons.assessment,
             text: '입출고 현황',
-            routeName: '/inout_status_page',
+            routeName: '/inout_status',
           ),
         ],
       ),

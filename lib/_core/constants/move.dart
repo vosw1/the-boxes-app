@@ -15,12 +15,12 @@ class Move {
   static const String loginPage = "/login";
   static const String joinPage = "/join";
   static const String homePage = "/home";
-  static const String inoutPage = "/inout_page";
-  static const String itemPage = "/item_page";
-  static const String inoutInstructionPage = "/inout_instruction_page";
-  static const String inoutLocationPage = "/inout_location_page";
-  static const String inventoryStatusPage = "/inventory_status_page";
-  static const String inoutStatusPage = "/inout_status_page";
+  static const String inoutPage = "/inout";
+  static const String itemPage = "/item";
+  static const String inoutInstructionPage = "/inout_instruction";
+  static const String inoutLocationPage = "/inout_location";
+  static const String inventoryStatusPage = "/inventory_status";
+  static const String inoutStatusPage = "/inout_status";
   static const String setting = "/setting";
 }
 
@@ -31,12 +31,12 @@ Map<String, Widget Function(BuildContext)> getRouters() {
     "/login": (context) => LoginPage(),
     "/join": (context) => JoinPage(),
     "/home": (context) => HomePage(),
-    "/item_page": (context) => ItemPage(),
-    "/inout_page": (context) => InOutPage(),
-    "/inout_instruction_page": (context) => InOutInstructionPage(),
-    "/inout_location_page": (context) => InOutLocationPage(),
-    "/inventory_status_page": (context) => InventoryStatusPage(),
-    "/inout_status_page": (context) => InOutStatusPage(),
+    "/item": (context) => ItemPage(),
+    "/inout": (context) => InOutPage(),
+    "/inout_instruction": (context) => InOutInstructionPage(),
+    "/inout_location": (context) => InOutLocationPage(),
+    "/inventory_status": (context) => InventoryStatusPage(),
+    "/inout_status": (context) => InOutStatusPage(),
     "/setting": (context) => SettingPage(),
   };
 }
