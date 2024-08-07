@@ -45,11 +45,11 @@ class MyApp extends StatelessWidget {
         "/join": (context) => JoinPage(),
         "/home": (context) => HomePage(),
         "/item": (context) => ItemPage(),
-        "/inout_page": (context) => InOutPage(),
-        "/inout_instruction_page": (context) => InOutInstructionPage(),
-        "/inout_location_page": (context) => InOutLocationPage(),
-        "/inventory_status_page": (context) => InventoryStatusPage(),
-        "/inout_status_page": (context) => InOutStatusPage(),
+        "/inout": (context) => InOutPage(),
+        "/inout_instruction": (context) => InOutInstructionPage(),
+        "/inout_location": (context) => InOutLocationPage(),
+        "/inventory_status": (context) => InventoryStatusPage(),
+        "/inout_status": (context) => InOutStatusPage(),
       },
     );
   }
