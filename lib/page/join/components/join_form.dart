@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:the_boxes/components/custom_auth_text_form_field.dart';
 import 'package:the_boxes/components/custom_elavated_button.dart';
 import 'package:the_boxes/_core/util/validation_utils.dart';
 import 'package:the_boxes/_core/constants/size.dart';
+import 'package:the_boxes/data/dto/join_req_dto.dart';
+import 'package:the_boxes/data/store/session_store.dart';
 
-class JoinForm extends StatelessWidget {
+class JoinForm extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
   final _username = TextEditingController();
   final _password = TextEditingController();
@@ -20,7 +23,7 @@ class JoinForm extends StatelessWidget {
   final _equipment = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Form(
       key: _formKey,
       child: Column(
@@ -42,28 +45,28 @@ class JoinForm extends StatelessWidget {
           CustomAuthTextFormField(
             text: "Name",
             obscureText: false,
-            funValidator: ValidationUtils.validateName, // 필요 시 유효성 검사 추가
+            funValidator: ValidationUtils.validateName,
             controller: _name,
           ),
           const SizedBox(height: m_gap),
           CustomAuthTextFormField(
             text: "Birthdate",
             obscureText: false,
-            funValidator: ValidationUtils.validateBirthdate, // 필요 시 유효성 검사 추가
+            funValidator: ValidationUtils.validateBirthdate,
             controller: _birthdate,
           ),
           const SizedBox(height: m_gap),
           CustomAuthTextFormField(
             text: "Phone",
             obscureText: false,
-            funValidator: ValidationUtils.validatePhone, // 필요 시 유효성 검사 추가
+            funValidator: ValidationUtils.validatePhone,
             controller: _phone,
           ),
           const SizedBox(height: m_gap),
           CustomAuthTextFormField(
             text: "Address",
             obscureText: false,
-            funValidator: ValidationUtils.validateAddress, // 필요 시 유효성 검사 추가
+            funValidator: ValidationUtils.validateAddress,
             controller: _address,
           ),
           const SizedBox(height: m_gap),
@@ -77,41 +80,41 @@ class JoinForm extends StatelessWidget {
           CustomAuthTextFormField(
             text: "Company Address",
             obscureText: false,
-            funValidator: ValidationUtils.validateCompanyAddress, // 필요 시 유효성 검사 추가
+            funValidator: ValidationUtils.validateCompanyAddress,
             controller: _companyAddress,
           ),
           const SizedBox(height: m_gap),
           CustomAuthTextFormField(
             text: "Industry",
             obscureText: false,
-            funValidator: ValidationUtils.validateIndustry, // 필요 시 유효성 검사 추가
+            funValidator: ValidationUtils.validateIndustry,
             controller: _industry,
           ),
           const SizedBox(height: m_gap),
           CustomAuthTextFormField(
             text: "Position",
             obscureText: false,
-            funValidator: ValidationUtils.validatePosition, // 필요 시 유효성 검사 추가
+            funValidator: ValidationUtils.validatePosition,
             controller: _position,
           ),
           const SizedBox(height: m_gap),
           CustomAuthTextFormField(
             text: "Logistics Center Location",
             obscureText: false,
-            funValidator: ValidationUtils.validateLogisticsCenterLocation, // 필요 시 유효성 검사 추가
+            funValidator: ValidationUtils.validateLogisticsCenterLocation,
             controller: _logisticsCenterLocation,
           ),
           const SizedBox(height: m_gap),
           CustomAuthTextFormField(
             text: "Equipment",
             obscureText: false,
-            funValidator: ValidationUtils.validateEquipment, // 필요 시 유효성 검사 추가
+            funValidator: ValidationUtils.validateEquipment,
             controller: _equipment,
           ),
           const SizedBox(height: l_gap),
           CustomElevatedButton(
             text: "회원가입",
-            funPageRoute: () {
+            funPageRoute: () async {
               if (_formKey.currentState!.validate()) {
                 String username = _username.text.trim();
                 String password = _password.text.trim();
@@ -142,12 +145,28 @@ class JoinForm extends StatelessWidget {
                 print('Equipment: $equipment');
 
                 // 예를 들어:
-                // JoinReqDTO joinReqDTO = JoinReqDTO(
-                //     username: username, password: password, email: email, ...);
-                //
-                // SessionStore store = ref.read(sessionProvider);
-                //
-                // store.join(joinReqDTO);
+                JoinReqDTO joinReqDTO = JoinReqDTO(
+                  username: username,
+                  password: password,
+                  email: email,
+                );
+
+                // 로그인 메서드 호출
+                SessionStore store = ref.read(sessionProvider);
+                await store.join(joinReqDTO);
+                store.join(joinReqDTO);
+
+                // 로그인 요청 DTO 생성
+                if (store.isJoin) {
+                  print('join form 회원가입 성공');
+                  // 로그인 성공 시 Home 페이지로 이동
+                  Navigator.of(context).pushReplacementNamed('/home'); // Navigate to HomePage
+                } else {
+                  // 로그인 실패 시 에러 메시지 표시
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('회원가입 실패. 다시 시도해 주세요.')),
+                  );
+                }
               }
             },
           ),
