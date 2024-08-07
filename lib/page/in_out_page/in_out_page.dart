@@ -7,7 +7,7 @@ class InOutInstructionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: '입출고 지시', icon: Icons.settings),
+      appBar: CustomAppBar(title: '입출고 지시'),
     );
   }
 }

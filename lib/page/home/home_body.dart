@@ -23,9 +23,9 @@ class HomeBody extends StatelessWidget {
             routeName: '/inout_instruction_page',
           ),
           CustomIconTextButton(
-            icon: Icons.category,
+            icon: Icons.assignment,
             text: '품목',
-            routeName: '/inout_location_page',
+            routeName: '/item_page',
           ),
           CustomIconTextButton(
             icon: Icons.location_on,
