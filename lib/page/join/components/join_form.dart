@@ -1,13 +1,14 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:the_boxes/components/custom_auth_text_form_field.dart';
-import 'package:the_boxes/components/custom_elavated_button.dart';
-import 'package:the_boxes/_core/util/validation_utils.dart';
 import 'package:the_boxes/_core/constants/size.dart';
+import 'package:the_boxes/_core/util/validation_utils.dart';
 import 'package:the_boxes/data/dto/join_req_dto.dart';
 import 'package:the_boxes/data/store/session_store.dart';
 import 'package:the_boxes/data/repository/user_repository.dart';
+import 'custom_test_form_field.dart';
+import 'username_field.dart';
+import 'password_field.dart';
+import 'submit_button.dart';
 
 class JoinForm extends ConsumerStatefulWidget {
   @override
@@ -16,85 +17,21 @@ class JoinForm extends ConsumerStatefulWidget {
 
 class _JoinFormState extends ConsumerState<JoinForm> {
   final _formKey = GlobalKey<FormState>();
-  final _username = TextEditingController();
-  final _password = TextEditingController();
-  final _name = TextEditingController();
-  final _birthdate = TextEditingController();
-  final _phone = TextEditingController();
-  final _address = TextEditingController();
-  final _email = TextEditingController();
-  final _companyAddress = TextEditingController();
-  final _industry = TextEditingController();
-  final _position = TextEditingController();
-  final _logisticsCenterLocation = TextEditingController();
-  final _equipment = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _birthdateController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _companyAddressController = TextEditingController();
+  final _industryController = TextEditingController();
+  final _positionController = TextEditingController();
+  final _logisticsCenterLocationController = TextEditingController();
+  final _equipmentController = TextEditingController();
 
   bool _isUsernameAvailable = false;
-  String? _usernameError;
   final UserRepository _userRepository = UserRepository();
-  Timer? _debounce;
-
-  @override
-  void initState() {
-    super.initState();
-    _username.addListener(_onUsernameChanged);
-  }
-
-  @override
-  void dispose() {
-    _debounce?.cancel();
-    _username.dispose();
-    _password.dispose();
-    _name.dispose();
-    _birthdate.dispose();
-    _phone.dispose();
-    _address.dispose();
-    _email.dispose();
-    _companyAddress.dispose();
-    _industry.dispose();
-    _position.dispose();
-    _logisticsCenterLocation.dispose();
-    _equipment.dispose();
-    super.dispose();
-  }
-
-  void _onUsernameChanged() {
-    if (_debounce?.isActive ?? true) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      _checkUsername();
-    });
-  }
-
-  Future<void> _checkUsername() async {
-    if (_username.text.isEmpty) {
-      setState(() {
-        _usernameError = null;
-        _isUsernameAvailable = true; // 사용 가능 상태로 설정
-      });
-      return;
-    }
-
-    final requestDTO = DuplimentEmailCheckDTO(username: _username.text.trim());
-    try {
-      final responseDTO = await _userRepository.fetchUsernameSameCheck(requestDTO);
-
-      // 서버 응답의 `body`가 `false`일 때 유저네임 사용 가능
-      final bool isAvailable = responseDTO.body == false; // 서버 응답이 `false`일 때만 사용 가능으로 간주
-
-      setState(() {
-        _isUsernameAvailable = isAvailable;
-        _usernameError = _isUsernameAvailable ? null : 'Username is already taken';
-      });
-    } catch (e) {
-      // 예외 처리 및 에러 메시지 설정
-      print('유저네임 중복 체크 오류: $e');
-      setState(() {
-        _usernameError = '서버 오류: 유저네임 중복 체크 실패';
-      });
-    }
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,139 +39,80 @@ class _JoinFormState extends ConsumerState<JoinForm> {
       key: _formKey,
       child: Column(
         children: [
-          CustomAuthTextFormField(
-            text: "Username",
-            obscureText: false,
-            funValidator: ValidationUtils.validateUsername,
-            controller: _username,
+          UsernameField(
+            userRepository: _userRepository,
+            onUsernameAvailable: (isAvailable) {
+              setState(() {
+                _isUsernameAvailable = isAvailable;
+              });
+            },
           ),
-          if (_usernameError != null)
-            Text(
-              _usernameError!,
-              style: TextStyle(color: Colors.red),
-            ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Password",
-            obscureText: true,
-            funValidator: ValidationUtils.validatePassword,
-            controller: _password,
+          PasswordField(controller: _passwordController),
+          CustomTextField(
+            label: "Name",
+            controller: _nameController,
+            validator: ValidationUtils.validateName,
           ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Name",
-            obscureText: false,
-            funValidator: ValidationUtils.validateName,
-            controller: _name,
+          CustomTextField(
+            label: "Birthdate",
+            controller: _birthdateController,
+            validator: ValidationUtils.validateBirthdate,
           ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Birthdate",
-            obscureText: false,
-            funValidator: ValidationUtils.validateBirthdate,
-            controller: _birthdate,
+          CustomTextField(
+            label: "Phone",
+            controller: _phoneController,
+            validator: ValidationUtils.validatePhone,
           ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Phone",
-            obscureText: false,
-            funValidator: ValidationUtils.validatePhone,
-            controller: _phone,
+          CustomTextField(
+            label: "Address",
+            controller: _addressController,
+            validator: ValidationUtils.validateAddress,
           ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Address",
-            obscureText: false,
-            funValidator: ValidationUtils.validateAddress,
-            controller: _address,
+          CustomTextField(
+            label: "Email",
+            controller: _emailController,
+            validator: ValidationUtils.validateEmail,
           ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Email",
-            obscureText: false,
-            funValidator: ValidationUtils.validateEmail,
-            controller: _email,
+          CustomTextField(
+            label: "Company Address",
+            controller: _companyAddressController,
+            validator: ValidationUtils.validateCompanyAddress,
           ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Company Address",
-            obscureText: false,
-            funValidator: ValidationUtils.validateCompanyAddress,
-            controller: _companyAddress,
+          CustomTextField(
+            label: "Industry",
+            controller: _industryController,
+            validator: ValidationUtils.validateIndustry,
           ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Industry",
-            obscureText: false,
-            funValidator: ValidationUtils.validateIndustry,
-            controller: _industry,
+          CustomTextField(
+            label: "Position",
+            controller: _positionController,
+            validator: ValidationUtils.validatePosition,
           ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Position",
-            obscureText: false,
-            funValidator: ValidationUtils.validatePosition,
-            controller: _position,
+          CustomTextField(
+            label: "Logistics Center Location",
+            controller: _logisticsCenterLocationController,
+            validator: ValidationUtils.validateLogisticsCenterLocation,
           ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Logistics Center Location",
-            obscureText: false,
-            funValidator: ValidationUtils.validateLogisticsCenterLocation,
-            controller: _logisticsCenterLocation,
+          CustomTextField(
+            label: "Equipment",
+            controller: _equipmentController,
+            validator: ValidationUtils.validateEquipment,
           ),
-          const SizedBox(height: m_gap),
-          CustomAuthTextFormField(
-            text: "Equipment",
-            obscureText: false,
-            funValidator: ValidationUtils.validateEquipment,
-            controller: _equipment,
-          ),
-          const SizedBox(height: l_gap),
-          CustomElevatedButton(
-            text: "회원가입",
-            funPageRoute: () async {
+          SizedBox(height: l_gap),
+          SubmitButton(
+            onPressed: () async {
               if (_formKey.currentState!.validate() && _isUsernameAvailable) {
-                String username = _username.text.trim();
-                String password = _password.text.trim();
-                String name = _name.text.trim();
-                String birthdate = _birthdate.text.trim();
-                String phone = _phone.text.trim();
-                String address = _address.text.trim();
-                String email = _email.text.trim();
-                String companyAddress = _companyAddress.text.trim();
-                String industry = _industry.text.trim();
-                String position = _position.text.trim();
-                String logisticsCenterLocation = _logisticsCenterLocation.text.trim();
-                String equipment = _equipment.text.trim();
-
-                // 가입 요청 로직 추가
-                print('Username: $username');
-                print('Password: $password');
-                print('Name: $name');
-                print('Birthdate: $birthdate');
-                print('Phone: $phone');
-                print('Address: $address');
-                print('Email: $email');
-                print('Company Address: $companyAddress');
-                print('Industry: $industry');
-                print('Position: $position');
-                print('Logistics Center Location: $logisticsCenterLocation');
-                print('Equipment: $equipment');
-
-                JoinReqDTO joinReqDTO = JoinReqDTO(
-                  username: username,
-                  password: password,
-                  email: email,
+                final joinReqDTO = JoinReqDTO(
+                  username: _usernameController.text.trim(),
+                  password: _passwordController.text.trim(),
+                  email: _emailController.text.trim(),
                 );
 
                 final store = ref.read(sessionProvider);
 
                 if (store.isLogin) {
-                  // 가입 성공 시 홈 페이지로 이동
                   Navigator.of(context).pushReplacementNamed('/home');
                 } else {
-                  // 가입 실패 시 에러 메시지 표시
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('회원가입 실패. 다시 시도해 주세요.')),
                   );
