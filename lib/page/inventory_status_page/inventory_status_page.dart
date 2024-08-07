@@ -7,7 +7,7 @@ class InventoryStatusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: '재고 현황'),
+      appBar: CustomAppBar(title: '재고 현황', icon: Icons.settings),
     );
   }
 }

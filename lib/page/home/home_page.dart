@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'The Boxes'), // Use your custom AppBar
+      appBar: CustomAppBar(title: 'The Boxes', icon: Icons.settings), // Use your custom AppBar
       body: HomeBody(),
     );
   }
